@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_11_110421) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_29_104259) do
+  create_table "attendances", force: :cascade do |t|
+    t.integer "attendee_id"
+    t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_id"], name: "index_attendances_on_attendee_id"
+    t.index ["event_id"], name: "index_attendances_on_event_id"
+  end
+
   create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.datetime "date"
+    t.string "title"
+    t.date "start_date"
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
+    t.date "end_date"
+    t.integer "creator_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -27,8 +39,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_110421) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end

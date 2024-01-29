@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
-    def show
-        @user = User.find()
-        @event = @user.events
-    end
+
+def show
+    @user = User.find(params[id])
+    @events = @user.events
+end
     
-    end
+def index
+    @users = User.all
+end
+
+end

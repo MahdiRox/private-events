@@ -8,7 +8,17 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :events
+  # config/routes.rb
+
+resources :events do
+  post 'attend', to: 'attendances#create', on: :member
+end
+
+    
+
+
+  delete '/events/:id', to: 'events#destroy'
+  
   devise_for :users
   root to: "events#index"
 end

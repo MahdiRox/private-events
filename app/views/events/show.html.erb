@@ -1,0 +1,50 @@
+
+<h1>Event title</h1>
+<p><%= @event.title %></p>
+<h1>Event description</h1>
+<p><%= @event.description %></p>
+<h1>Event's location</h1>
+<p><%= @event.location%> </p>
+<h1>Event's start date</h1>
+<p><%= @event.start_date%></p>
+<h1>Event's end date</h1>
+<p><%= @event.end_date%></p>
+
+event's creator email "<%= @event.creator.email%>"
+
+<br>
+<br>
+
+<% if @current_user and @current_user == @event.creator %>
+    <%= button_to  "Delete", event_path(@event), method: :delete %>
+<% end %>
+
+
+
+
+
+<% if user_signed_in? %>
+  <% if @user_attending %>
+    <p>thank you for attending this event.</p>
+  <% else %>
+    <%= form_for(@attendance, url: attend_event_path, method: :post) do |f| %>
+      <%= f.hidden_field :event_id, value: @event.id %>
+      <%= f.submit "Attend Event" %>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>Please sign in to attend this event.</p>
+<% end %>
+
+
+<% @attendees.each do |attender| %>
+    <%= attender.username %>
+<% end %>
+
+
+<% if flash[:notice].present? %>
+  <p><%= flash[:notice] %></p>
+  <% else %>
+  <p><%= flash[:error]%> </p>
+<% end %>
+

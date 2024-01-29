@@ -5,10 +5,29 @@
 <ul>
     <% @events.each do |event| %>
     <li>
-        <%= event %>
+        <%= link_to  event.title, event_path(event) %>
     </li>
 <% end %>
 </ul>
 
+
+
+<% if @current_user %>
+  <%= button_to  "new event", new_event_path, method: :get %>
+  <br>
+   <p>your name : <%= @current_user.username %></p>
+  
+   <p>your email : <%= @current_user.email %></p>
+  
+  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+  
+<% end %>
+
+<br>
+<br>
+
+<% if !@current_user %>
+  <%= button_to "log in", new_user_session_path %>
+<% end %>
 
 
