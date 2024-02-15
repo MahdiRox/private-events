@@ -1,17 +1,46 @@
-<h1> <%= @user.name %>'s Events </h1>
-
-
+<h1> <%= @current_user.username %>'s created Events             </h1>
 <ul>
-    <% @events.each do |event| %>
-    <li>
-        <%= link_to event.title, event_path(event)  %>
-        <%= link_to event.description, event_path(event) %>
-    </li>
+    <% @current_user.created_events.each do |event| %>
+      <li><h4><%= event.title %></h4></li>  
     <% end %>
+
+</ul>
+
+
+<h1> <%= @current_user.username %>'s Attended Events </h1>
+
+<%= link_to  "home page", events_path %>
+
+<% @past_events = @current_user.attended_events.where('end_date < ?', Date.today)  %>
+<% @current_events = @current_user.attended_events.where('(end_date > ?) AND (start_date <= ?)', Date.today, Date.today) %>
+<% @upcoming_events = @current_user.attended_events.where('start_date > ?', Date.today) %>
+
+
+
+<h3>past_events:</h3>
+<ul>
+<% @past_events.each do |event| %>
+    <li><h4>title: <%= link_to event.title, event_path(event)%></h4></li>
+    <li><h4>description: <%= event.description%></h4></li>       
+<% end %>
 </ul>
 
 
 
+<h3>current_events:</h3>
+<ul>
+    <% @current_events.each do |event| %>
+        <li><h4>title: <%= link_to event.title, event_path(event) %></h4></li>
+        <li><h4>description: <%= event.description %></h4></li>       
+    <% end %>
+</ul>
 
 
-  
+<h3>upcoming_events:</h3>
+<ul>
+    <% @upcoming_events.each do |event| %>
+        <li><h4>title: <%= link_to event.title, event_path(event) %></h4></li>
+        <li><h4>description: <%= event.description %></h4></li>       
+    <% end %>
+</ul>
+

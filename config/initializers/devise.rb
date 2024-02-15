@@ -4,6 +4,7 @@ Devise.setup do |config|
     config.responder.redirect_status = :see_other
     config.authentication_keys = [:email,:username]
     require 'devise/orm/active_record'
+    
   end
   
   

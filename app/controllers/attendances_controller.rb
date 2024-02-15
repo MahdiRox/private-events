@@ -3,6 +3,11 @@ class AttendancesController < ApplicationController
         @attendance = Attendance.new
     end
 
+    def show
+        @attendance = Attendance.find(params[:id])
+    end
+    
+
     def create
         @attendance = Attendance.new(attendee_id: current_user.id, event_id: event_params)
         if @attendance.save
@@ -20,6 +25,7 @@ class AttendancesController < ApplicationController
     
         flash[:notice] = 'Event attendance cancelled'
         redirect_to event_url(@attendance.event), status: :see_other
+
       end
     
 

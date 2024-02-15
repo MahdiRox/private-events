@@ -1,14 +1,46 @@
 <header>
     <h1>Events</h1>
 </header>
+<% if @current_user %>
+  <%= link_to  "your event's", user_path(@current_user) %>
+<% end %>
 
-<ul>
-    <% @events.each do |event| %>
+
+<h2>Public Events:</h2>
+
+<% if @is_public %>
+    <ul>
+    <h2>upcoming event's</h2>
+    <% @upcoming_events.each do |event| %>
     <li>
         <%= link_to  event.title, event_path(event) %>
     </li>
 <% end %>
 </ul>
+
+<ul>
+    <h2>past event's</h2>
+    <% @current_events.each do |event| %>
+    <li>
+        <%= link_to  event.title, event_path(event) %>
+    </li>
+<% end %>
+</ul>
+
+
+<ul>
+    <h2>past event's</h2>
+    <% @past_events.each do |event| %>
+    <li>
+        <%= link_to  event.title, event_path(event) %>
+    </li>
+<% end %>
+</ul>
+  
+<% end %>
+
+
+
 
 
 
@@ -19,7 +51,7 @@
   
    <p>your email : <%= @current_user.email %></p>
   
-  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+  <%= button_to "Logout", destroy_user_session_path, method: :delete %>
   
 <% end %>
 

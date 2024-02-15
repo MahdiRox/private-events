@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   # config/routes.rb
 
 resources :events do
-  post 'attend', to: 'attendances#create', on: :member
+   post 'attend', to: 'attendances#create', on: :member
+   delete 'unattend', to: 'attendances#destroy', on: :member
 end
 
     
@@ -19,6 +20,10 @@ end
 
   delete '/events/:id', to: 'events#destroy'
   
+  resources :users,only: [:show]
+
   devise_for :users
   root to: "events#index"
+
+  
 end

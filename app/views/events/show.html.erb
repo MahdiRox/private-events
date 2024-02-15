@@ -1,4 +1,6 @@
 
+
+
 <h1>Event title</h1>
 <p><%= @event.title %></p>
 <h1>Event description</h1>
@@ -10,10 +12,29 @@
 <h1>Event's end date</h1>
 <p><%= @event.end_date%></p>
 
-event's creator email "<%= @event.creator.email%>"
+<% if @event.is_private? %>
+<h1> this Event is private </h1> 
+<% end %>
+
+
+<% if @current_user == @event.creator %>
+  <%= link_to  "edite your event", edit_event_path(@event)%>
+<% end %>
+
+
 
 <br>
+
+<%= link_to  "home page", root_path %>
+
+<p>event's creator email "<%= @event.creator.username%>"</p>
+
+
 <br>
+
+
+
+
 
 <% if @current_user and @current_user == @event.creator %>
     <%= button_to  "Delete", event_path(@event), method: :delete %>
@@ -26,25 +47,28 @@ event's creator email "<%= @event.creator.email%>"
 <% if user_signed_in? %>
   <% if @user_attending %>
     <p>thank you for attending this event.</p>
+    <%= button_to  "unattend event", unattend_event_path(@event), method: :delete %>
   <% else %>
-    <%= form_for(@attendance, url: attend_event_path, method: :post) do |f| %>
+    <%= form_for(@attendance, url: attend_event_path) do |f| %>
+    
       <%= f.hidden_field :event_id, value: @event.id %>
       <%= f.submit "Attend Event" %>
     <% end %>
   <% end %>
 <% else %>
   <p>Please sign in to attend this event.</p>
+
 <% end %>
 
+<h2> Event's attenders</h2>
 
+<ul>
 <% @attendees.each do |attender| %>
-    <%= attender.username %>
+    <li><%= attender.username %></li>  
 <% end %>
 
+</ul>
 
-<% if flash[:notice].present? %>
-  <p><%= flash[:notice] %></p>
-  <% else %>
-  <p><%= flash[:error]%> </p>
-<% end %>
+
+
 
